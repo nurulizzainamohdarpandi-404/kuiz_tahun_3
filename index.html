@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Year 3 English Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFCFF; --ink:#1B2A4A; --rule:#C9DAF4; --rule-soft:#E6EEFA;
+  --pencil:#FFC93C; --pen:#D7263D; --tick:#1E9E6A; --muted:#5D6B86;
+  --body:"Andika","Trebuchet MS",Verdana,sans-serif;
+  --head:"Baloo 2","Trebuchet MS",Verdana,sans-serif;
+}
+*{box-sizing:border-box}
+html{font-size:18px}
+body{margin:0;font-family:var(--body);color:var(--ink);background:#DCE7F7;line-height:1.55;
+  -webkit-tap-highlight-color:transparent}
+h1,h2,h3{font-family:var(--head);line-height:1.15;margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--pencil);outline-offset:2px}
+.hide{display:none!important}
+
+/* the sheet: a page from an exercise book */
+.sheet{max-width:780px;margin:0 auto;min-height:100vh;background:var(--paper);
+  background-image:linear-gradient(var(--rule-soft) 1px,transparent 1px);background-size:100% 2rem;
+  padding:1.5rem 1.25rem 6rem;position:relative;box-shadow:0 0 0 1px var(--rule)}
+@media(min-width:700px){
+  .sheet{padding:2rem 2.5rem 6rem 4.25rem}
+  .sheet::before{content:"";position:absolute;top:0;bottom:0;left:3rem;width:2px;background:#F2A7B0}
+}
+
+/* start */
+.start h1{font-size:2.6rem;font-weight:800;margin-top:1rem}
+.start p.lead{font-size:1.1rem;margin:.5rem 0 1.75rem;max-width:32rem}
+.field{margin-bottom:1.1rem;max-width:26rem}
+.field label{display:block;font-weight:700;margin-bottom:.25rem}
+.field input{width:100%;padding:.7rem .85rem;border:2px solid var(--ink);border-radius:10px;background:#fff;font-size:1.1rem}
+.err{color:var(--pen);font-weight:700;min-height:1.5rem;margin:.25rem 0}
+.btn{border:2px solid var(--ink);background:var(--pencil);border-radius:12px;padding:.7rem 1.4rem;font-family:var(--head);
+  font-weight:800;font-size:1.1rem;cursor:pointer;box-shadow:0 4px 0 var(--ink)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.btn.plain{background:#fff}
+.btn.small{font-size:.85rem;padding:.4rem .8rem;box-shadow:0 2px 0 var(--ink);border-radius:9px}
+.btn.danger{background:#fff;color:var(--pen);border-color:var(--pen);box-shadow:0 2px 0 var(--pen)}
+.facts{display:flex;gap:1.25rem;flex-wrap:wrap;margin:1.5rem 0 0;padding:0;list-style:none;color:var(--muted);font-size:.9rem}
+
+/* quiz */
+.top{position:sticky;top:0;z-index:5;background:var(--paper);margin:-1.5rem -1.25rem 1rem;padding:.7rem 1.25rem;border-bottom:2px solid var(--ink)}
+@media(min-width:700px){.top{margin:-2rem -2.5rem 1.25rem -4.25rem;padding:.7rem 2.5rem .7rem 4.25rem}}
+.top .row{display:flex;justify-content:space-between;gap:1rem;font-size:.85rem;align-items:baseline}
+.top .who{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:10px;border:2px solid var(--ink);border-radius:99px;margin-top:.4rem;overflow:hidden;background:#fff}
+.bar i{display:block;height:100%;background:var(--pencil);transition:width .25s}
+.sec{font-size:1.7rem;font-weight:800}
+.inst{font-weight:700;border-bottom:3px solid var(--ink);display:inline-block;margin:.25rem 0 1rem;padding-bottom:.1rem}
+.inst.sub{margin-top:1.5rem}
+.q{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:1rem;margin-bottom:1rem}
+.qh{display:flex;gap:.7rem;align-items:flex-start}
+.qh p{margin:0;flex:1;font-size:1.1rem}
+.num{font-family:var(--head);font-weight:800;background:var(--ink);color:#fff;border-radius:8px;min-width:2rem;height:2rem;
+  display:grid;place-items:center;font-size:.95rem;padding:0 .3rem}
+.pic{font-size:2.4rem;line-height:1}
+.blank{display:inline-block;min-width:4.5rem;border-bottom:2px solid var(--ink);margin:0 .15rem}
+u{text-decoration-thickness:3px;text-underline-offset:3px;font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-top:.85rem}
+@media(max-width:420px){.opts.long{grid-template-columns:1fr}}
+.opt{display:flex;gap:.6rem;align-items:center;text-align:left;border:2px solid var(--rule);background:var(--paper);
+  border-radius:10px;padding:.6rem .7rem;cursor:pointer;min-height:3rem}
+.opt b{font-family:var(--head);width:1.7rem;height:1.7rem;flex:none;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-size:.85rem;background:#fff}
+.opt.on{border-color:var(--ink);background:#FFF3C7}
+.opt.on b{background:var(--pen);color:#fff;border-color:var(--pen)}
+.passage{background:#fff;border:2px dashed var(--ink);border-radius:14px;padding:1rem 1.1rem;margin-bottom:1.1rem;font-size:1.1rem;line-height:2.1}
+.gap{font-weight:700;border-bottom:2px solid var(--ink);padding:0 .3rem;white-space:nowrap}
+.gap.fill{color:var(--pen)}
+.ln{border:0;border-bottom:2px solid var(--ink);background:transparent;padding:.1rem .3rem;font-size:1.05rem;color:var(--pen);
+  font-weight:700;border-radius:0;min-width:0}
+.ln.w{width:100%;display:block;margin:.55rem 0}
+.ln.s{width:8.5rem}
+.ln.m{width:11rem}
+.words{font-family:var(--head);font-weight:600;background:#FFF3C7;border:2px solid var(--ink);border-radius:10px;padding:.35rem .7rem;display:inline-block;margin-bottom:.6rem}
+.animal{display:flex;gap:1rem;align-items:flex-start}
+.animal .pic{font-size:3.4rem}
+.animal .body{flex:1;min-width:0}
+.boxes{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.1rem}
+@media(max-width:480px){.boxes{grid-template-columns:1fr}}
+.boxes div{border:2px solid var(--ink);border-radius:8px;background:#fff;padding:.45rem .7rem;font-size:.95rem;text-align:center}
+.hero{font-size:3rem;text-align:center;margin-bottom:.5rem}
+.nav{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem}
+
+/* result */
+.result{text-align:center;padding-top:1.5rem}
+.result h1{font-size:2rem;font-weight:800}
+.scorewrap{position:relative;display:inline-block;margin:1.5rem 0 1rem;padding:1.2rem 2.4rem}
+.score{font-family:var(--head);font-weight:800;font-size:5rem;line-height:1;color:var(--pen)}
+.score small{font-size:2rem}
+.scorewrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.scorewrap path{fill:none;stroke:var(--pen);stroke-width:4;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 1.1s .2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.scorewrap path{animation:none;stroke-dashoffset:0}.bar i{transition:none}}
+.pct{font-family:var(--head);font-size:1.4rem;font-weight:800}
+.break{max-width:24rem;margin:1.25rem auto;text-align:left;border:2px solid var(--ink);border-radius:14px;background:#fff;overflow:hidden}
+.break div{display:flex;justify-content:space-between;padding:.55rem .9rem;border-bottom:1px solid var(--rule)}
+.break div:last-child{border:0}
+.break b{font-family:var(--head)}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(27,42,74,.55);display:grid;place-items:center;padding:1rem;z-index:20}
+.modal .box{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:1.4rem;width:100%;max-width:24rem}
+.modal h3{font-size:1.3rem;margin-bottom:.6rem}
+.modal .acts{display:flex;gap:.7rem;justify-content:flex-end;margin-top:1.1rem;flex-wrap:wrap}
+
+/* admin */
+.admin{font-size:.9rem;background:#fff;background-image:none}
+.admin::before{display:none}
+.admin{max-width:1000px;padding:1.25rem 1.25rem 4rem}
+.admin h1{font-size:1.7rem;font-weight:800}
+.ahead{display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem}
+.tools{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.tools select{padding:.4rem .6rem;border:2px solid var(--ink);border-radius:9px;background:#fff}
+.note{background:#FFF3C7;border:2px solid var(--ink);border-radius:10px;padding:.5rem .8rem;margin-bottom:1rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1rem}
+@media(max-width:560px){.stats{grid-template-columns:1fr 1fr}}
+.stat{border:2px solid var(--ink);border-radius:12px;padding:.6rem .8rem}
+.stat b{display:block;font-family:var(--head);font-size:1.6rem;line-height:1.1}
+.tabs{display:flex;gap:.4rem;margin-bottom:.8rem}
+.tab{border:2px solid var(--ink);background:#fff;border-radius:99px;padding:.35rem 1rem;font-weight:700;cursor:pointer}
+.tab.on{background:var(--ink);color:#fff}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--head);border-bottom:2px solid var(--ink);white-space:nowrap}
+tr.click{cursor:pointer}
+tr.click:hover{background:#F3F7FE}
+.wrong{color:var(--pen);font-weight:700}
+.right{color:var(--tick);font-weight:700}
+.mk{border:2px solid currentColor;background:#fff;border-radius:8px;width:2.2rem;height:2rem;font-weight:800;cursor:pointer}
+.meter{height:8px;background:var(--rule-soft);border-radius:9px;min-width:70px}
+.meter i{display:block;height:100%;background:var(--pen);border-radius:9px}
+.names{color:var(--muted);font-size:.8rem}
+.empty{padding:2rem 1rem;text-align:center;color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="app" class="sheet"></div>
+<div id="modal" class="modal hide"><div class="box" id="mbox"></div></div>
+
+<script>
+/* ============ TETAPAN GURU ============ */
+const CONFIG = {
+  PASSWORD: 'VAE404',
+  // Tampal URL Web App Google Apps Script di sini supaya markah dari SEMUA peranti
+  // terkumpul di satu tempat. Jika dibiarkan kosong, markah hanya disimpan pada peranti ini.
+  SHEET_URL: 'https://script.google.com/macros/s/AKfycbx6qCgDTWXP5M3ikU5U1DpjZj96us3p0K7pzM15aiSveFfCTGwzS0P2SKGz9RFWTpucLg/exec'
+};
+/* ====================================== */
+
+const B = '<span class="blank"></span>';
+// n: [soalan, pilihan, indeks jawapan, gambar]
+const MCQ = {
+  1:['Siti likes to '+B+' in the pool during the weekends.',['read','swim','cook','paint'],1,'🏊'],
+  2:['My mother eats '+B+' apple every day.',['and','a','an','or'],2,'🍎'],
+  3:['What are these?',['These are elephants.','These are tigers.','These are monkeys.','These are snakes.'],0,'🐘🐘'],
+  4:['Ali and I are neighbours. '+B+' always cycle together.',['We','They','I','He'],0],
+  5:['The boy '+B+' the plants every day.',['watering','watered','water','waters'],3],
+  6:['Mr Tan '+B+' a kind teacher. He always helps his pupils.',['are','is','has','have'],1],
+  7:['She '+B+' her room yesterday.',['cleaned','clean','cleans','cleaning'],0],
+  8:[B+' are big animals.',['Elefants','Elephants','Eliphants','Elephents'],1],
+  9:['That boy is very '+B+'.',['clevar','cleaver','clever','clevver'],2],
+  10:['He likes '+B+' in the morning.',['joging','jogging','jokking','jogginng'],1],
+  11:['I saw a '+B+' at the zoo.',['crocodile','crocodail','crokodile','crocodille'],0],
+  12:['We ate '+B+' at the party.',['sanwiches','sandwitches','sandwiches','sandwichs'],2],
+  13:['Every Sunday, he '+B+' football with his friends.',['played','play','playing','plays'],3],
+  14:['Mira '+B+' to the library yesterday.',['walk','walked','walking','walks'],1],
+  15:['The woman is cooking in the kitchen. I think '+B+' is making lunch.',['he','she','it','her'],1],
+  16:['My brothers '+B+' very tall boys.',['is','are','was','has'],1],
+  17:['Farid has a pet cat. '+B+' feeds it every morning.',['He','Him','They','We'],0],
+  18:['They <u>study</u> for the test.',['studies','studyed','studied','studying'],2],
+  19:['The girl <u>tries</u> her best.',['try','tried','tryed','trying'],1],
+  20:['He <u>washes</u> his hands at the sink.',['washed','washied','wash','washing'],0],
+  21:['Aiman <u>paints</u> a picture.',['paint','painting','painted','paintted'],2],
+  22:['I <u>push</u> the trolley.',['pushes','pushing','pushied','pushed'],3],
+  23:['Blank (23)',['went','go','goes','going'],1],
+  24:['Blank (24)',['They','Us','Them','Him'],0],
+  25:['Blank (25)',['bringing','brings','bring','brought'],1],
+  26:['Blank (26)',['pilot','gardener','fisherman','dentist'],1],
+  27:['Blank (27)',['water','watering','waters','watered'],2]
+};
+
+const TEXT_KEYS = ['28a','28b','28c','29a','29b','29c','30a','30b','30c',
+  '31','32','33','34','35','36','37','38','39','40','c1','c2','c3','c4'];
+const KEYS = [...Array(27)].map((_,i)=>String(i+1)).concat(TEXT_KEYS);
+const CORRECT = {
+  '28a':'giraffe','28b':'brown spots','28c':'leaves',
+  '29a':'This is a rabbit.','29b':'It has long ears.','29c':'It eats carrots.',
+  '30a':'This is a deer.','30b':'It has two long antlers on its head.','30c':'It eats grass.',
+  '31':'soft trunk','32':'leaves','33':'bunch','34':'yellow','35':'white','36':'soft','37':'sweet',
+  '38':'cakes','39':'chips','40':'Banana milkshake',
+  'c1':'laughed','c2':'asked','c3':'jumped','c4':'stopped'
+};
+const SECTIONS = [
+  ['Section A',KEYS.slice(0,27)],
+  ['Section B (A) Animals',KEYS.slice(27,36)],
+  ['Section B (B) Passage',KEYS.slice(36,46)],
+  ['Section B (C) Past tense',KEYS.slice(46)]
+];
+const TOTAL = KEYS.length; // 50
+
+function label(k){
+  if(/^\d+$/.test(k)) return 'Q'+k;
+  if(k[0]==='c') return 'C ('+k[1]+')';
+  return 'Q'+k.slice(0,2)+' ('+(' abc'.indexOf(k[2]))+')';
+}
+function correctText(k){
+  if(MCQ[k]) return 'ABCD'[MCQ[k][2]]+'. '+MCQ[k][1][MCQ[k][2]];
+  return CORRECT[k];
+}
+function givenText(k,ans){
+  const v=ans[k];
+  if(v===undefined||v===null||v==='') return '(tiada jawapan)';
+  if(MCQ[k]) return 'ABCD'[v]+'. '+MCQ[k][1][v];
+  return v;
+}
+const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function markAll(ans){
+  const m={}, t=k=>norm(ans[k]);
+  const has=(k,...w)=>w.every(x=>(' '+t(k)+' ').includes(' '+x+' '))?1:0;
+  for(let n=1;n<=27;n++) m[n]=ans[n]===MCQ[n][2]?1:0;
+  m['28a']=['giraffe','a giraffe'].includes(t('28a'))?1:0;
+  m['28b']=has('28b','brown spots');
+  m['28c']=t('28c')==='leaves'?1:0;
+  m['29a']=has('29a','this is a rabbit');
+  m['29b']=has('29b','it has','long ears');
+  m['29c']=has('29c','it eats','carrots');
+  m['30a']=has('30a','this is a deer');
+  m['30b']=has('30b','it has','two long antlers','head');
+  m['30c']=has('30c','it eats','grass');
+  const eq=(k,...opts)=>opts.includes(t(k))?1:0;
+  m['31']=eq('31','soft trunk'); m['32']=eq('32','leaves'); m['33']=eq('33','bunch');
+  m['34']=eq('34','yellow'); m['35']=eq('35','white');
+  m['36']=eq('36','soft','sweet'); m['37']=(eq('37','soft','sweet')&&t('37')!==t('36'))?1:0;
+  m['38']=eq('38','cakes','chips'); m['39']=(eq('39','cakes','chips')&&t('39')!==t('38'))?1:0;
+  m['40']=eq('40','banana milkshake');
+  m['c1']=eq('c1','laughed'); m['c2']=eq('c2','asked'); m['c3']=eq('c3','jumped'); m['c4']=eq('c4','stopped');
+  return m;
+}
+const sum=(marks,keys)=>keys.reduce((a,k)=>a+(marks[k]?1:0),0);
+
+/* ---------- storage ---------- */
+const LS='y3eng_results_v1', DRAFT='y3eng_draft_v1';
+const lsGet=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch(e){return d}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
+const loadLocal=()=>lsGet(LS,[]);
+function upsertLocal(rec){const a=loadLocal();const i=a.findIndex(r=>r.id===rec.id);if(i>=0)a[i]=rec;else a.push(rec);lsSet(LS,a)}
+async function remote(body){
+  const r=await fetch(CONFIG.SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
+  return r.json();
+}
+async function pushRecord(rec){
+  if(!CONFIG.SHEET_URL) return false;
+  try{await remote({action:'save',record:rec});rec.synced=true;upsertLocal(rec);return true}catch(e){return false}
+}
+async function syncPending(){
+  if(!CONFIG.SHEET_URL) return;
+  for(const r of loadLocal()) if(!r.synced) await pushRecord(r);
+}
+async function fetchAll(){
+  const loc=loadLocal();
+  if(!CONFIG.SHEET_URL) return {recs:loc,mode:'local'};
+  try{
+    await syncPending();
+    const j=await (await fetch(CONFIG.SHEET_URL)).json();
+    const map=new Map((j.records||[]).map(r=>[r.id,r]));
+    loadLocal().forEach(r=>{if(!map.has(r.id)&&!r.synced)map.set(r.id,r)});
+    return {recs:[...map.values()],mode:'online'};
+  }catch(e){return {recs:loc,mode:'error'}}
+}
+
+/* ---------- state ---------- */
+const app=document.getElementById('app'), modal=document.getElementById('modal'), mbox=document.getElementById('mbox');
+let S={screen:'start',page:0,name:'',cls:'',ans:{},t0:0};
+const saveDraft=()=>lsSet(DRAFT,{page:S.page,name:S.name,cls:S.cls,ans:S.ans,t0:S.t0});
+
+/* ---------- quiz pages ---------- */
+function mcqHTML(n,showQ=true){
+  const m=MCQ[n], long=m[1].some(o=>o.length>12);
+  return `<div class="q"><div class="qh"><span class="num">${n}</span>${showQ?`<p>${m[0]}</p>`:`<p>Choose the best word for blank (${n}).</p>`}${m[3]?`<span class="pic" aria-hidden="true">${m[3]}</span>`:''}</div>
+  <div class="opts${long?' long':''}">${m[1].map((o,i)=>`<button type="button" class="opt${S.ans[n]===i?' on':''}" data-k="${n}" data-i="${i}" aria-pressed="${S.ans[n]===i}"><b>${'ABCD'[i]}</b><span>${o}</span></button>`).join('')}</div></div>`;
+}
+const range=(a,b)=>{const r=[];for(let i=a;i<=b;i++)r.push(i);return r};
+const inp=(k,cls,ph='')=>`<input class="ln ${cls}" data-k="${k}" value="${esc(S.ans[k]||'')}" aria-label="Answer ${label(k)}" placeholder="${ph}" autocomplete="off" autocapitalize="off" spellcheck="false">`;
+const gap=n=>`<span class="gap" data-g="${n}"></span>`;
+function fillGaps(){
+  document.querySelectorAll('.gap').forEach(g=>{
+    const n=g.dataset.g, v=S.ans[n];
+    g.textContent='('+n+') '+(v===undefined?'______':MCQ[n][1][v]);
+    g.classList.toggle('fill',v!==undefined);
+  });
+}
+const PAGES=[
+  {sec:'Section A',html:()=>`<span class="inst">Choose the correct answer.</span>`+range(1,7).map(n=>mcqHTML(n)).join('')},
+  {sec:'Section A',html:()=>`<span class="inst">Choose the word with the correct spelling.</span>`+range(8,12).map(n=>mcqHTML(n)).join('')
+      +`<span class="inst sub">Choose the correct answer.</span>`+range(13,17).map(n=>mcqHTML(n)).join('')},
+  {sec:'Section A',html:()=>`<span class="inst">Choose the correct simple past tense of the underlined word.</span>`+range(18,22).map(n=>mcqHTML(n)).join('')},
+  {sec:'Section A',html:()=>`<span class="inst">Read and choose the best answer.</span>
+    <div class="hero" aria-hidden="true">🧒👧🧒👦 🛝🌳</div>
+    <div class="passage">Every evening, Aina, Wei Jie, Kumar and Daniel ${gap(23)} to the playground near their house. ${gap(24)} play there together. Everyone ${gap(25)} a water bottle. Mr Rahman is the ${gap(26)}. He ${gap(27)} the plants in the park every day.</div>`
+    +range(23,27).map(n=>mcqHTML(n,false)).join('')},
+  {sec:'Section B',html:()=>`<span class="inst">A. Write 3 sentences to describe each animal based on the words given. (9 marks)</span>
+    <div class="q"><div class="animal"><span class="num">28</span><span class="pic" aria-hidden="true">🦒</span><div class="body">
+      <span class="words">giraffe -- brown spots -- leaves</span>
+      <div>This is a ${inp('28a','s')}.</div>
+      <div>It has ${inp('28b','m')} on its body.</div>
+      <div>It eats ${inp('28c','s')}.</div></div></div></div>
+    <div class="q"><div class="animal"><span class="num">29</span><span class="pic" aria-hidden="true">🐇</span><div class="body">
+      <span class="words">rabbit -- long ears -- carrots</span>
+      ${inp('29a','w','Sentence 1')}${inp('29b','w','Sentence 2')}${inp('29c','w','Sentence 3')}</div></div></div>
+    <div class="q"><div class="animal"><span class="num">30</span><span class="pic" aria-hidden="true">🦌</span><div class="body">
+      <span class="words">deer -- two long antlers -- head -- grass</span>
+      ${inp('30a','w','Sentence 1')}${inp('30b','w','Sentence 2')}${inp('30c','w','Sentence 3')}</div></div></div>`},
+  {sec:'Section B',html:()=>`<span class="inst">B. Use the words given to complete the passage. (10 marks)</span>
+    <div class="hero" aria-hidden="true">🍌</div>
+    <div class="boxes"><div>Banana milkshake is refreshing.</div><div>A banana plant has a soft trunk.</div>
+      <div>Banana cakes and chips are also tasty.</div><div>Banana tastes soft and sweet.</div>
+      <div>Banana flesh is white.</div><div>A banana plant has big leaves.</div>
+      <div>Ripe banana skin is yellow.</div><div>Bananas grow in a bunch.</div></div>
+    <div class="passage">The banana plant has a (31) ${inp('31','m')}. It has big (32) ${inp('32','s')}. Bananas grow in a (33) ${inp('33','s')}.
+      The skin of a ripe banana is (34) ${inp('34','s')}. The flesh of a banana is (35) ${inp('35','s')}.
+      It tastes (36) ${inp('36','s')} and (37) ${inp('37','s')}. Banana (38) ${inp('38','s')} and (39) ${inp('39','s')} are also tasty.
+      (40) ${inp('40','m')} is refreshing.</div>`},
+  {sec:'Section B',html:()=>`<span class="inst">C. Rewrite the text with the correct simple past tense. (4 marks)</span>
+    <div class="passage" style="border-style:solid">Once upon a time, a hare and a tortoise were friends. They <u>live</u> near a river. One day, the hare <u>laugh</u> at the slow tortoise. The tortoise <u>ask</u> the hare to race. The hare <u>jump</u> ahead quickly. Then, he <u>stop</u> to rest under a tree.</div>
+    <div class="passage">Once upon a time, a hare and a tortoise were friends. They <u>lived</u> near a river. One day, the hare ${inp('c1','s')} at the slow tortoise.
+      The tortoise ${inp('c2','s')} the hare to race. The hare ${inp('c3','s')} ahead quickly. Then, he ${inp('c4','s')} to rest under a tree.</div>`}
+];
+
+/* ---------- render ---------- */
+function render(){
+  app.className='sheet'+(S.screen==='admin'?' admin':'');
+  if(S.screen==='start') return renderStart();
+  if(S.screen==='quiz') return renderQuiz();
+  if(S.screen==='result') return renderResult();
+  if(S.screen==='admin') return renderAdmin();
+}
+function renderStart(){
+  app.innerHTML=`<div class="start">
+    <div class="hero" style="text-align:left" aria-hidden="true">✏️📖</div>
+    <h1>Year 3 English Practice</h1>
+    <p class="lead">Write your name and your class. Then answer all the questions.</p>
+    <div class="field"><label for="nm">Name / Nama</label><input id="nm" maxlength="60" autocomplete="off" value="${esc(S.name)}"></div>
+    <div class="field"><label for="cl">Class / Kelas</label><input id="cl" maxlength="30" autocomplete="off" placeholder="3 Bestari" value="${esc(S.cls)}"></div>
+    <div class="err" id="err" role="alert"></div>
+    <button class="btn" id="go">Start the quiz</button>
+    <ul class="facts"><li>50 marks</li><li>Section A: 27 questions</li><li>Section B: writing</li></ul></div>`;
+  document.getElementById('go').onclick=()=>{
+    const n=document.getElementById('nm').value.trim(), c=document.getElementById('cl').value.trim();
+    if(!n||!c){document.getElementById('err').textContent='Please write your name and your class first.';return}
+    S={screen:'quiz',page:0,name:n,cls:c,ans:{},t0:Date.now()};saveDraft();render();
+  };
+}
+function renderQuiz(){
+  const p=PAGES[S.page], last=S.page===PAGES.length-1;
+  const done=KEYS.filter(k=>S.ans[k]!==undefined&&S.ans[k]!=='').length;
+  app.innerHTML=`<div class="top"><div class="row"><span class="who">${esc(S.name)} (${esc(S.cls)})</span><span>Page ${S.page+1} of ${PAGES.length}</span></div>
+    <div class="bar" aria-hidden="true"><i id="pbar" style="width:${done/TOTAL*100}%"></i></div></div>
+    <h2 class="sec">${p.sec}</h2><div>${p.html()}</div>
+    <div class="nav"><button class="btn plain${S.page===0?' hide':''}" id="back">Back</button><span></span>
+    <button class="btn" id="next">${last?'Finish and see my marks':'Next page'}</button></div>`;
+  fillGaps();
+  document.getElementById('back').onclick=()=>{S.page--;saveDraft();render();scrollTo(0,0)};
+  document.getElementById('next').onclick=()=>{
+    if(!last){S.page++;saveDraft();render();scrollTo(0,0);return}
+    const left=KEYS.filter(k=>S.ans[k]===undefined||String(S.ans[k]).trim()==='').length;
+    openModal(`<h3>Finish the quiz?</h3><p>${left?`You have <b>${left}</b> unanswered ${left===1?'blank':'blanks'}. You can go back and check.`:'You answered everything. Well done!'}</p>
+      <div class="acts"><button class="btn plain small" id="mNo">Go back and check</button><button class="btn small" id="mYes">Finish</button></div>`);
+    document.getElementById('mNo').onclick=closeModal;
+    document.getElementById('mYes').onclick=()=>{closeModal();finish()};
+  };
+}
+function updateBar(){
+  const done=KEYS.filter(k=>S.ans[k]!==undefined&&S.ans[k]!=='').length;
+  const b=document.getElementById('pbar'); if(b) b.style.width=(done/TOTAL*100)+'%';
+}
+function finish(){
+  const marks=markAll(S.ans);
+  const rec={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),name:S.name,cls:S.cls,ts:Date.now(),
+    secs:Math.round((Date.now()-S.t0)/1000),ans:S.ans,marks,total:sum(marks,KEYS),synced:false};
+  upsertLocal(rec);lsDel(DRAFT);pushRecord(rec);
+  S.screen='result';S.rec=rec;render();scrollTo(0,0);
+}
+function renderResult(){
+  const r=S.rec, pct=Math.round(r.total/TOTAL*100);
+  const msg=pct>=80?'Excellent work!':pct>=60?'Good job!':pct>=40?'Nice try. Keep practising!':'Keep trying. You can do it!';
+  app.innerHTML=`<div class="result"><h1>${msg}</h1><p>${esc(r.name)} (${esc(r.cls)})</p>
+    <div class="scorewrap"><svg viewBox="0 0 300 160" preserveAspectRatio="none" aria-hidden="true"><path d="M150 12 C60 4 8 40 12 84 C16 132 90 154 160 150 C240 146 292 116 288 72 C284 30 210 2 120 14"/></svg>
+      <div class="score">${r.total}<small>/${TOTAL}</small></div></div>
+    <div class="pct">${pct}%</div>
+    <div class="break">${SECTIONS.map(([n,k])=>`<div><span>${n}</span><b>${sum(r.marks,k)} / ${k.length}</b></div>`).join('')}</div>
+    <button class="btn" id="again">Next pupil</button></div>`;
+  document.getElementById('again').onclick=()=>{S={screen:'start',page:0,name:'',cls:'',ans:{},t0:0};render()};
+}
+
+/* ---------- events: answering ---------- */
+app.addEventListener('click',e=>{
+  const o=e.target.closest('.opt'); if(!o) return;
+  const k=o.dataset.k, i=+o.dataset.i; S.ans[k]=i;
+  o.parentNode.querySelectorAll('.opt').forEach(x=>{const on=x===o;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on)});
+  fillGaps();updateBar();saveDraft();
+});
+app.addEventListener('input',e=>{
+  const k=e.target.dataset&&e.target.dataset.k; if(!k) return;
+  S.ans[k]=e.target.value; if(e.target.value==='') delete S.ans[k];
+  updateBar();saveDraft();
+});
+
+/* ---------- modal ---------- */
+function openModal(html){mbox.innerHTML=html;modal.classList.remove('hide')}
+function closeModal(){modal.classList.add('hide');mbox.innerHTML=''}
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+
+/* ---------- triple tap -> teacher login ---------- */
+let taps=[];
+document.addEventListener('pointerup',e=>{
+  if(S.screen==='admin'||!modal.classList.contains('hide')) return;
+  if(e.target.closest('button,input,select,textarea,a,label')) {taps=[];return}
+  const now=Date.now(); taps=taps.filter(t=>now-t<700); taps.push(now);
+  if(taps.length>=3){taps=[];askPassword()}
+});
+function askPassword(){
+  openModal(`<h3>Ruang guru</h3><div class="field" style="margin:0"><label for="pw">Kata laluan</label>
+    <input id="pw" type="password" autocomplete="off"></div><div class="err" id="perr" role="alert"></div>
+    <div class="acts"><button class="btn plain small" id="pNo">Batal</button><button class="btn small" id="pYes">Masuk</button></div>`);
+  const pw=document.getElementById('pw'); setTimeout(()=>pw.focus(),50);
+  const go=()=>{ if(pw.value.trim()===CONFIG.PASSWORD){closeModal();A.prev=S.screen;S.screen='admin';A.data=null;render();scrollTo(0,0)}
+    else document.getElementById('perr').textContent='Kata laluan salah. Cuba lagi.' };
+  document.getElementById('pYes').onclick=go;
+  document.getElementById('pNo').onclick=closeModal;
+  pw.onkeydown=e=>{if(e.key==='Enter')go()};
+}
+
+/* ---------- admin ---------- */
+const A={tab:'list',cls:'',data:null,mode:'local',prev:'start',open:null};
+const fmtT=ts=>new Date(ts).toLocaleString('ms-MY',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+async function renderAdmin(){
+  if(!A.data){
+    app.innerHTML='<p class="empty">Memuatkan keputusan…</p>';
+    const r=await fetchAll(); A.data=r.recs.sort((a,b)=>b.ts-a.ts); A.mode=r.mode;
+    if(S.screen!=='admin') return;
+  }
+  const classes=[...new Set(A.data.map(r=>r.cls))].sort();
+  const recs=A.data.filter(r=>!A.cls||r.cls===A.cls);
+  const tot=recs.map(r=>r.total), avg=tot.length?(tot.reduce((a,b)=>a+b,0)/tot.length):0;
+  const note=A.mode==='local'?'Markah disimpan pada peranti ini sahaja. Untuk kumpul markah dari semua peranti, isi SHEET_URL (lihat Code.gs).'
+    :A.mode==='error'?'Tidak dapat berhubung dengan Google Sheet. Memaparkan markah pada peranti ini sahaja.':'';
+  app.innerHTML=`<div class="ahead"><h1>Keputusan murid</h1><div class="tools">
+      <select id="fcls" aria-label="Tapis kelas"><option value="">Semua kelas</option>${classes.map(c=>`<option${c===A.cls?' selected':''}>${esc(c)}</option>`).join('')}</select>
+      <button class="btn small plain" id="aRef">Muat semula</button><button class="btn small plain" id="aCsv">Eksport CSV</button>
+      <button class="btn small danger" id="aClr">Padam semua</button><button class="btn small" id="aOut">Keluar</button></div></div>
+    ${note?`<div class="note">${note}</div>`:''}
+    <div class="stats"><div class="stat">Murid menjawab<b>${recs.length}</b></div><div class="stat">Purata<b>${avg.toFixed(1)} / ${TOTAL}</b></div>
+      <div class="stat">Tertinggi<b>${tot.length?Math.max(...tot):0}</b></div><div class="stat">Terendah<b>${tot.length?Math.min(...tot):0}</b></div></div>
+    <div class="tabs"><button class="tab${A.tab==='list'?' on':''}" data-tab="list">Markah individu</button>
+      <button class="tab${A.tab==='items'?' on':''}" data-tab="items">Analisis soalan</button></div>
+    <div id="abody"></div>`;
+  const body=document.getElementById('abody');
+  if(!recs.length) body.innerHTML='<p class="empty">Belum ada murid yang menjawab.</p>';
+  else if(A.tab==='list'){
+    body.innerHTML=`<div class="scroll"><table><thead><tr><th>Nama</th><th>Kelas</th><th>Markah</th><th>%</th><th>Sek. A</th><th>Sek. B</th><th>Masa hantar</th></tr></thead><tbody>
+      ${recs.map(r=>`<tr class="click" data-id="${r.id}" tabindex="0"><td><b>${esc(r.name)}</b></td><td>${esc(r.cls)}</td><td><b>${r.total}</b> / ${TOTAL}</td><td>${Math.round(r.total/TOTAL*100)}</td>
+        <td>${sum(r.marks,SECTIONS[0][1])}/27</td><td>${r.total-sum(r.marks,SECTIONS[0][1])}/23</td><td>${fmtT(r.ts)}</td></tr>`).join('')}
+      </tbody></table></div><p class="names">Tekan nama murid untuk lihat jawapan setiap soalan.</p>`;
+    body.querySelectorAll('tr.click').forEach(tr=>{tr.onclick=()=>openDetail(tr.dataset.id);tr.onkeydown=e=>{if(e.key==='Enter')openDetail(tr.dataset.id)}});
+  } else {
+    body.innerHTML=`<div class="scroll"><table><thead><tr><th>Soalan</th><th>Jawapan betul</th><th>Salah</th><th></th><th>Murid yang salah</th></tr></thead><tbody>
+      ${KEYS.map(k=>{const w=recs.filter(r=>!r.marks[k]);return `<tr><td><b>${label(k)}</b></td><td>${esc(correctText(k))}</td>
+        <td class="${w.length?'wrong':'right'}">${w.length} / ${recs.length}</td><td><div class="meter"><i style="width:${w.length/recs.length*100}%"></i></div></td>
+        <td class="names">${w.map(r=>esc(r.name)).join(', ')||'-'}</td></tr>`}).join('')}</tbody></table></div>`;
+  }
+  document.getElementById('fcls').onchange=e=>{A.cls=e.target.value;renderAdmin()};
+  document.getElementById('aRef').onclick=()=>{A.data=null;renderAdmin()};
+  document.getElementById('aOut').onclick=()=>{S.screen=(A.prev==='quiz'&&S.name)?'quiz':(A.prev==='result'&&S.rec)?'result':'start';render()};
+  document.getElementById('aCsv').onclick=()=>exportCsv(recs);
+  document.getElementById('aClr').onclick=()=>{
+    openModal(`<h3>Padam semua keputusan?</h3><p>Semua markah murid akan dipadam dan tidak boleh dikembalikan.</p>
+      <div class="acts"><button class="btn plain small" id="cNo">Batal</button><button class="btn small danger" id="cYes">Padam semua</button></div>`);
+    document.getElementById('cNo').onclick=closeModal;
+    document.getElementById('cYes').onclick=async()=>{closeModal();lsSet(LS,[]);if(CONFIG.SHEET_URL){try{await remote({action:'clear'})}catch(e){}}A.data=null;renderAdmin()};
+  };
+  app.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{A.tab=t.dataset.tab;renderAdmin()});
+}
+function openDetail(id){
+  const r=A.data.find(x=>x.id===id); if(!r) return;
+  const wrong=KEYS.filter(k=>!r.marks[k]);
+  app.innerHTML=`<div class="ahead"><h1>${esc(r.name)}</h1><div class="tools"><button class="btn small danger" id="dDel">Padam rekod</button><button class="btn small" id="dBack">Kembali</button></div></div>
+    <div class="stats"><div class="stat">Kelas<b>${esc(r.cls)}</b></div><div class="stat">Markah<b id="dTot">${r.total} / ${TOTAL}</b></div>
+      <div class="stat">Soalan salah<b id="dWr">${wrong.length}</b></div><div class="stat">Masa menjawab<b>${Math.round((r.secs||0)/60)} min</b></div></div>
+    <p class="names">Dihantar ${fmtT(r.ts)}. Jawapan bertulis disemak secara automatik. Tekan petak ✓ / ✗ untuk ubah markah jika perlu.</p>
+    <div class="scroll"><table><thead><tr><th>Soalan</th><th>Jawapan murid</th><th>Jawapan betul</th><th>Markah</th></tr></thead><tbody>
+    ${KEYS.map(k=>`<tr><td><b>${label(k)}</b></td><td class="${r.marks[k]?'':'wrong'}">${esc(givenText(k,r.ans))}</td><td>${esc(correctText(k))}</td>
+      <td><button class="mk ${r.marks[k]?'right':'wrong'}" data-k="${k}" aria-label="Ubah markah ${label(k)}">${r.marks[k]?'✓':'✗'}</button></td></tr>`).join('')}</tbody></table></div>`;
+  scrollTo(0,0);
+  document.getElementById('dBack').onclick=()=>renderAdmin();
+  document.getElementById('dDel').onclick=async()=>{
+    lsSet(LS,loadLocal().filter(x=>x.id!==id));A.data=A.data.filter(x=>x.id!==id);
+    if(CONFIG.SHEET_URL){try{await remote({action:'delete',id})}catch(e){}}
+    renderAdmin();
+  };
+  app.querySelectorAll('.mk').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.k; r.marks[k]=r.marks[k]?0:1; r.total=sum(r.marks,KEYS); r.synced=false;
+    b.textContent=r.marks[k]?'✓':'✗'; b.className='mk '+(r.marks[k]?'right':'wrong');
+    b.closest('tr').children[1].className=r.marks[k]?'':'wrong';
+    document.getElementById('dTot').textContent=r.total+' / '+TOTAL;
+    document.getElementById('dWr').textContent=KEYS.filter(x=>!r.marks[x]).length;
+    upsertLocal(r);pushRecord(r);
+  });
+}
+function exportCsv(recs){
+  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const rows=[['Nama','Kelas','Markah','Peratus','Masa hantar','Soalan salah',...KEYS.map(label)]];
+  recs.forEach(r=>rows.push([r.name,r.cls,r.total,Math.round(r.total/TOTAL*100),new Date(r.ts).toLocaleString('ms-MY'),
+    KEYS.filter(k=>!r.marks[k]).map(label).join(' | '),...KEYS.map(k=>r.marks[k]?1:0)]));
+  const blob=new Blob(['\ufeff'+rows.map(r=>r.map(q).join(',')).join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='markah-english-tahun3.csv';a.click();
+}
+
+/* ---------- boot ---------- */
+const d=lsGet(DRAFT,null);
+if(d&&d.name){S={screen:'quiz',page:d.page||0,name:d.name,cls:d.cls,ans:d.ans||{},t0:d.t0||Date.now()}}
+render();syncPending();
+</script>
+</body>
+</html>
